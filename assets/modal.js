@@ -6,68 +6,6 @@
 */
 'use strict';
 
-function getSingleElementByClassName(className) {
-  return document.getElementsByClassName(className)[0];
-}
-
-function replaceInnerInClass(className, text) {
-  var theClass = getSingleElementByClassName(className);
-  theClass.innerHTML = '';
-  theClass.appendChild(document.createTextNode(text));
-}
-
-function appendTextToClass(className, text) {
-  getSingleElementByClassName(className).appendChild(document.createTextNode(text));
-}
-
-function replaceTextInClass(className, text) {
-  replaceInnerInClass(className, '');
-  appendTextToClass(className, text);
-}
-
-function prettifyTimeAgo(datetime) {
-  var timeDiff = Date.now().valueOf() - datetime.valueOf();
-
-  // milliseconds
-  if (timeDiff < 1000) {
-    return ' just now';
-  }
-
-  // seconds
-  timeDiff = Math.round(timeDiff / 1000);
-  if (timeDiff < 30) {
-    return timeDiff + ' secs ago';
-  }
-
-  // minutes
-  timeDiff = Math.round(timeDiff / 60);
-  if (timeDiff < 50) {
-    return timeDiff + ' mins ago';
-  }
-
-  // hours
-  timeDiff = Math.round(timeDiff / 60);
-  if (timeDiff < 24) {
-    return timeDiff + ' hours ago';
-  }
-
-  // days
-  timeDiff = Math.round(timeDiff / 24);
-  if (timeDiff < 7) {
-    return timeDiff + ' days ago';
-  }
-
-  // weeks
-  timeDiff = Math.round(timeDiff / 7);
-  if (timeDiff < 4) {
-    return timeDiff + ' weeks ago';
-  }
-
-  // months
-  timeDiff = Math.round(timeDiff / 4);
-  return timeDiff + ' months ago';
-}
-
 function populateMessage(data) {
   // dumps pretty json into hidden area
   var prettyJSONData = JSON.stringify(data, null, 4);
@@ -75,29 +13,29 @@ function populateMessage(data) {
 
   // finds network-specific information
   var avatarURL = 'https://hootsuite.com/dist/images/logos/hootsuite/owly.png';
-  var displayName = '';
-  var profileURL = '';
+  var displayName = 'Hootsuite';
+  var profileURL = 'https://hootsuite.com/';
   switch (data.post.network) {
     case 'FACEBOOK':
-    avatarURL = data.profile.picture;
-    displayName = data.profile.name;
-    profileURL = data.profile.link;
-    break;
+      avatarURL = data.profile.picture;
+      displayName = data.profile.name;
+      profileURL = data.profile.link;
+      break;
     case 'TWITTER':
-    avatarURL = data.profile.profile_image_url_https;
-    displayName = data.profile.name;
-    profileURL = data.profile.url;
-    break;
+      avatarURL = data.profile.profile_image_url_https;
+      displayName = data.profile.name;
+      profileURL = data.profile.url;
+      break;
     case 'INSTAGRAM':
-    avatarURL = data.profile.profile_picture;
-    displayName = data.profile.full_name;
-    profileURL = 'https://instagram.com/' + data.post.user.username;
-    break;
+      avatarURL = data.profile.profile_picture;
+      displayName = data.profile.full_name;
+      profileURL = 'https://instagram.com/' + data.post.user.username;
+      break;
     case 'YOUTUBE':
-    avatarURL = data.profile.avatar_url;
-    displayName = data.profile.name;
-    profileURL = 'https://www.youtube.com/channel/' + data.profile.userid;
-    break;
+      avatarURL = data.profile.avatar_url;
+      displayName = data.profile.name;
+      profileURL = 'https://www.youtube.com/channel/' + data.profile.userid;
+      break;
   }
 
   // displays user's display name and attaches url to username
@@ -195,15 +133,14 @@ function startEventListeners() {
   getSingleElementByClassName('hs_logout').addEventListener('click', function () {
     window.localStorage.loggedIn = 'false';
   });
+
+  getSingleElementByClassName('hs_logout').addEventListener('click', signOut);
 }
 
 // for our purposes this is the same thing as jQuery's  $(document).ready(...)
 document.addEventListener('DOMContentLoaded', function () {
   var data = JSON.parse(window.localStorage.jsonData);
-  console.log(data);
   populateMessage(data);
   startEventListeners();
-  if (window.localStorage.loggedIn === 'true') {
-    replaceTextInClass('hs_fakeLoggedIn', 'Logged in as ' + window.localStorage.fakeUsername);
-  }
+  googleAuthInit();
 });

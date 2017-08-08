@@ -1,0 +1,154 @@
+<!DOCTYPE>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Hootsuite Sample Stream</title>
+  
+  <script src="https://d2l6uygi1pgnys.cloudfront.net/jsapi/2-0/hsp.js"></script>
+
+  <script src="https://apis.google.com/js/platform.js" defer></script>
+  <meta name="google-signin-client_id" content="YOUR-CLIENT-ID-HERE">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    
+  <script src="./assets/util.js"></script>
+  <script src="./assets/stream.js"></script>
+  
+  <link rel="stylesheet" type="text/css" href="./assets/style.css">
+</head>
+<body style="background: white;">
+  <div class="hs_topBar">
+    <div class="hs_topBarContent">
+      <!--Right-Side Controls-->
+      <ul class="hs_topBarControls">
+        <li class="hs_topBarControlsBtn hs_sdkBtn" data-dropdown="sdk" title="More">
+          SDK Functions
+        </li>
+        <li class="hs_topBarControlsBtn hs_ellipsesBtn" data-dropdown="ellipses" title="More">
+          <span class="icon-app-dir x-ellipsis"></span>
+        </li>
+      </ul>
+      
+      <!--Left-Side Title-->
+      <h1 class="hs_topBarTitle">Hootsuite Component Sample</h1>
+    </div>
+
+    <!--Menu List-->
+    <ul class="hs_topBarDropdown hs_ellipsesDropdown hs_dropdownMenuList" data-dropdown="ellipses" style="display: none;">
+      <li class="hs_dropdownMenuListItem"><a class="hs_loggedIn" target="_blank">Not logged in</a></li>
+      <li class="hs_dropdownMenuListItem"><a target="_blank" href="https://hootsuite.com/help">Help</a></li>
+      <li class="hs_dropdownMenuListItem"><a target="_blank" href="https://feedback.hootsuite.com/discussions">Feedback</a></li>
+      <li class="hs_dropdownMenuListItem"><a target="_blank" href="https://github.com/">Developer</a></li>
+      <li class="hs_dropdownMenuListItem"><a target="_blank" href="https://hootsuite.s3.amazonaws.com/jsapi/1-0/app_stream_template.html">Hootsuite CSS theme for apps</a></li>
+      <li class="hs_dropdownMenuListItem hs_logout" style="display: none"><a>Logout</a></li>
+      <div class="g-signin2" data-onsuccess="onSignIn" data-prompt="select_account"></div>
+    </ul>
+    <ul class="hs_topBarDropdown hs_sdkDropdown hs_dropdownMenuList" data-dropdown="sdk" style="display: none;">
+      <li class="hs_dropdownMenuListItem"><a target="_blank" href="https://app-directory.s3.amazonaws.com/docs/sdk/index.html">SDK Functions</a></li>
+      <div class="hs_sdkContainer">
+        <button class="hs_btnCtaSml hs_btnTypeCta hs_showImagePreview">
+          showImagePreview()
+        </button>
+        <input class="hs_sdkInput hs_showImagePreviewInput" value="https://hootsuite.com/var/hootsuite/storage/images/media/images/media-kit/office-photos/hq2/53153-2-eng-US/hq2.jpg" type="text"></input>
+      </div>
+      <div class="hs_sdkContainer">
+        <button class="hs_btnCtaSml hs_btnTypeCta hs_showLightbox">
+          showLightbox()
+        </button>
+        <input class="hs_sdkInput hs_showLightboxInput" value="https://hootsuite.com/var/hootsuite/storage/images/media/images/media-kit/office-photos/hq2/53153-2-eng-US/hq2.jpg" type="text"></input>
+      </div>
+      <div class="hs_sdkContainer">
+        <button class="hs_btnCtaSml hs_btnTypeCta hs_showStatusMessage">
+          showStatusMessage()
+        </button>
+        <input class="hs_sdkInput hs_showStatusMessageInput" value="message" type="text"></input>
+        <input class="hs_sdkInput hs_showStatusMessageTypeInput" value="info" type="text"></input>
+      </div>
+      <div class="hs_sdkContainer">
+        <button class="hs_btnCtaSml hs_btnTypeCta hs_showUser">
+          showUser()
+        </button>
+        <input class="hs_sdkInput hs_showUserInput" value="hootsuite" type="text"></input>
+      </div>
+      <div class="hs_sdkContainer">
+        <button class="hs_btnCtaSml hs_btnTypeCta hs_composeMessage">
+          composeMessage()
+        </button>
+        <input class="hs_sdkInput hs_composeMessageInput" value="Message composed with the Hootsuite JavaScript SDK." type="text"></input>
+      </div>
+      <div class="hs_sdkContainer">
+        <button class="hs_btnCtaSml hs_btnTypeCta hs_attachFile">
+          attachFileToMessage()
+        </button>
+        <input class="hs_sdkInput hs_attachFileInput" value="https://hootsuite.com/var/hootsuite/storage/images/media/images/media-kit/office-photos/hq2/53153-2-eng-US/hq2.jpg" type="text"></input>
+        <input class="hs_sdkInput hs_attachFileImageName" value="Image Name" type="text"></input>
+      </div>
+      <div class="hs_sdkContainer">
+        <button class="hs_btnCtaSml hs_btnTypeCta hs_updatePlacementSubtitle">
+          updatePlacementSubtitle()
+        </button>
+        <input class="hs_sdkInput hs_updatePlacementSubtitleInput" value="Enter Subtitle Here" type="text"></input>
+      </div>
+      <div class="hs_sdkContainer">
+        <button class="hs_btnCtaSml hs_btnTypeCta hs_getTwitterAccounts">
+          getTwitterAccounts()
+        </button>
+        <span class="hs_getTwitterAccountsOutput"></span>
+      </div>
+      <div class="hs_sdkContainer">
+        <button class="hs_btnCtaSml hs_btnTypeCta hs_retweet">
+          retweet()
+        </button>
+        <input class="hs_sdkInput hs_retweetInput" value="https://twitter.com/hootsuite/status/887798023752994816" type="text"></input>
+      </div>
+      <div class="hs_sdkContainer">
+        <button class="hs_btnCtaSml hs_btnTypeCta hs_showFollowDialog">
+          showFollowDialog()
+        </button>
+        <input class="hs_sdkInput hs_showFollowDialogName" value="Hootsuite" type="text"></input>
+      </div>
+      <div class="hs_sdkContainer">
+        <button class="hs_btnCtaSml hs_btnTypeCta hs_assignItem">
+          assignItem()
+        </button>
+        <input class="hs_sdkInput hs_assignMessageAuthor" value="Hootsuite" type="text"></input>
+        <input class="hs_sdkInput hs_assignMessageAuthorAvatar" value="https://hootsuite.com//uploads/downloadable-assets/512px-owly-black-suit.jpg" type="text"></input>
+        <input class="hs_sdkInput hs_assignMessage" value="Default Assignment Message" type="text"></input>
+      </div>
+    </ul>
+  </div>
+  <div>
+  <div class="hs_messages">
+    <div class="hs_message">
+      <div class="hs_avatar">
+        <img src="https://hootsuite.com//uploads/downloadable-assets/512px-owly-bike.jpg" class="hs_avatarImage" alt="Avatar">
+      </div>
+      
+      <div class="hs_content">
+        <a href="#" class="hs_userName" target="_blank" title="@username">Username</a>
+        <a href="#" class="hs_postTime" target="_blank" title="7/24/2017, 2:15:14 PM via Hootsuite">1 hour ago</a>
+        
+        <div class="hs_contentText">
+          <p>
+            <span class="hs_postBody">Hello World!</span>
+          </p>
+        </div>
+        <ul class="hs_metrics">
+          <li class="hs_metricsItem">
+            <a href="#" class="hs_likesCount">1</a>
+            <span title="Likes" class="icon-app-dir x-heart"></span>
+          </li>
+          <li class="hs_metricsItem">
+            <a href="#" class="hs_commentsCount">2</a>
+            <span title="Comments" class="icon-app-dir x-comment"></span>
+          </li>
+          <li class="hs_metricsItem">
+            <a href="#" class="hs_sharesCount">3</a>
+            <span title="Shares" class="icon-app-dir x-retweet"></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

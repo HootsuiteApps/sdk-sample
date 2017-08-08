@@ -1,8 +1,58 @@
 'use strict';
 const express = require('express');
 const https = require('https');
+const http = require('http');
 const fs = require('fs');
+const sha512 = require('js-sha512');
 const app = express();
+
+var secret = '';
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function sendFakeMessages(socket) {
+  // emit a scripted set of messages
+  await sleep(2000);
+  socket.emit('stream update', 'hello!');
+  await sleep(2000);
+  socket.emit('stream update', 'hey, how are you?');
+  await sleep(2000);
+  socket.emit('stream update', 'i\'m good thanks, how are you?');
+  await sleep(2000);
+  socket.emit('stream update', 'i\'m good too');
+}
+
+// Create a file called secret.txt and paste your secret into it,
+// use an environment variable, or save it in another secure way.
+// Make sure not to push it version control!
+try {
+  secret = fs.readFileSync('secret.txt').toString();
+} catch (err) {
+  console.log('You must create a secret.txt file and populate it as described in the README');
+}
+
+app.get('/gen-token', (req, res) => {
+  // Combines information to create an auth token
+  // Auth token is retrieved by an AJAX request from stream.js
+  if (secret === '') {
+    console.log('Token generation failed because of missing shared secret');
+    res.status(500).send({error: 'Token generation failed because of missing shared secret'});
+  } else {
+    res.send(sha512(req.query.userId.toString() +
+                    req.query.timestamp.toString() +
+                    req.query.url.toString() + secret));
+  }
+});
+
+app.post('/stream', (req, res) => {
+	res.sendFile(__dirname + '/stream.html');
+});
+
+app.get('/stream', (req, res) => {
+	res.sendFile(__dirname + '/stream.html');
+});
 
 app.use('/assets', express.static('assets'));
 
@@ -12,14 +62,6 @@ app.post('/plugin', (req, res) => {
 
 app.get('/modal', (req, res) => {
   res.sendFile(__dirname + '/modal.html');
-});
-
-app.get('/logout', (req, res) => {
-  res.sendFile(__dirname + '/modal-logged-out.html');
-});
-
-app.get('/login', (req, res) => {
-  res.sendFile(__dirname + '/login.html');
 });
 
 // All Hoosuite apps require HTTPS, so in order to host locally
@@ -32,9 +74,17 @@ if (fs.existsSync('certs/server.crt') && fs.existsSync('certs/server.key')) {
   const options = {key: privateKey, cert: certificate};
 
   var server = https.createServer(options, app).listen(process.env.PORT || 5000);
-  console.log(`Example app listening on port ${process.env.PORT || 5000}!`);
+  console.log(`Example app listening on port ${process.env.PORT || 5000} using HTTPS`);
 } else {
-  app.listen(process.env.PORT || 5000, () => {
-    console.log(`Example app listening on port ${process.env.PORT || 5000}!`);
-  });
+  var server = http.createServer(app).listen(process.env.PORT || 5000);
+  console.log(`Example app listening on port ${process.env.PORT || 5000}`);
 }
+
+const io = require('socket.io')(server);
+
+io.on('connection', function (socket) {
+  sendFakeMessages(socket);
+  socket.on('restart', function(data) {
+    sendFakeMessages(socket);
+  });
+});

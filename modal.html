@@ -5,10 +5,15 @@
   <title>Hootsuite Sample App</title>
   
   <script src="https://d2l6uygi1pgnys.cloudfront.net/jsapi/2-0/hsp.js"></script>
-  
+
+  <script src="./assets/util.js"></script>
   <script src="./assets/modal.js"></script>
-  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
   
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+  <script src="https://apis.google.com/js/platform.js" defer></script>
+  <meta name="google-signin-client_id" content="YOUR-CLIENT-ID-HERE">
+
   <link rel="stylesheet" type="text/css" href="./assets/style.css">
   <link rel="stylesheet" type="text/css" href="https://d2l6uygi1pgnys.cloudfront.net/jsapi/2-0/assets/css/ad_default.css">
 </head>
@@ -28,12 +33,13 @@
     
     <!--Menu List-->
     <ul class="hs_topBarDropdown hs_dropdownMenuList active" data-dropdown="MenuList" style="display: none;">
-      <li class="hs_dropdownMenuListItem"><a class="hs_fakeLoggedIn" target="_blank">Logged in as Username</a></li>
+      <li class="hs_dropdownMenuListItem"><a class="hs_loggedIn" target="_blank">Not logged in</a></li>
       <li class="hs_dropdownMenuListItem"><a target="_blank" href="https://hootsuite.com/help">Help</a></li>
       <li class="hs_dropdownMenuListItem"><a target="_blank" href="https://feedback.hootsuite.com/discussions">Feedback</a></li>
-      <li class="hs_dropdownMenuListItem"><a target="_blank" href="https://github.com/HootsuiteApps/sdk-sample">Developer</a></li>
-      <li class="hs_dropdownMenuListItem"><a target="_blank" href="https://hootsuite.s3.amazonaws.com/jsapi/1-0/app_stream_template.html">Hootsuite CSS Theme For Apps</a></li>
-      <li class="hs_dropdownMenuListItem hs_logout"><a href="/logout">Logout</a></li>
+      <li class="hs_dropdownMenuListItem"><a target="_blank" href="https://github.com/">Developer</a></li>
+      <li class="hs_dropdownMenuListItem"><a target="_blank" href="https://hootsuite.s3.amazonaws.com/jsapi/1-0/app_stream_template.html">Hootsuite CSS theme for apps</a></li>
+      <li class="hs_dropdownMenuListItem hs_logout" style="display:none"><a>Logout</a></li>
+      <div class="g-signin2" data-onsuccess="onSignIn" data-prompt="select_account"></div>
     </ul>
   </div>
   <div class="hs_message">

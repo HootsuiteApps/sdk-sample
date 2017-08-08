@@ -14,3 +14,37 @@
 .hs_showJsonButton {
     flex: 0 1 auto;
 }
+
+.hs_messages {
+    margin-top: 40px;
+    overflow: scroll;
+}
+
+.hs_sdkContainer {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.hs_sdkContainer:last-child {
+    margin-bottom: 0px;
+}
+
+.hs_sdkInput {
+    flex-grow: 1;
+}
+
+.hs_sdkFunctions {
+    position: fixed;
+    bottom: 0;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.hs_topBar {
+    display: block;
+}
+
+.hs_getTwitterAccountsOutput {
+    margin-left: 10px;
+}
