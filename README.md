@@ -2,6 +2,21 @@
 
 > SDK Sample app for external developers to install
 
+## Table of Contents
+
+- [Overview](#overview)
+  - [What is the Hootsuite dashboard?](#what-is-the-hootsuite-dashboard)
+  - [What does a Hootsuite app do?](#what-does-a-hootsuite-app-do)
+  - [What does this Hootsuite app do?](#what-does-this-hootsuite-app-do)
+- [Getting started](#how-to-run-this-project)
+  - [Using Heroku](#using-heroku)
+  - [Using another solution](#using-another-solution)
+- [Configuration](#configuration)
+  - [Configuring your Hootsuite App](#configuring-your-hootsuite-app)
+  - [Configuring your shared secret](#configuring-your-shared-secret)
+- [Other things you can do with the Plugin SDK](#other-things-you-can-do-with-the-Plugin-SDK)
+- [Useful Links](#useful-links)
+
 ## Overview
 
 ### What is the Hootsuite dashboard?
@@ -36,6 +51,8 @@ Things to keep in mind:
 * You need to accept POST requests on your plugin and stream endpoints.
 * You need to host the static CSS, Javascript, and icons somehow.
 * Your endpoints need to have HTTPS.
+
+## Configuration
 
 ### Configuring your Hootsuite App
 
