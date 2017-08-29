@@ -49,12 +49,13 @@ The Sample App can be hosted locally, or on Heroku or some other hosting service
 ### Configuring your Hootsuite App
 
 1. If you already have a Hootsuite developer account head over to [your Hootsuite app  directory management page](https://hootsuite.com/developers/my-apps) and create an app, and inside that app create a plugin component. 
-  1. Edit the plugin component and enter the following into the fields: For the plugin component Service URL use your endpoint for plugin.html, if you used Heroku and Node this would be `https://<heroku-app-name-here>.herokuapp.com/plugin` . Also, check off the Default Install box. 
-  2. If you'd like to install a stream example as well you should create another component, but this time make it a stream. Edit it again and this time enter `https://<heroku-app-name-here>.herokuapp.com/stream` as your Service URL.
-2. Install your app by going to your [Hootsuite dashboard](https://hootsuite.com/dashboard) and navigating to the app directory (puzzle piece at the bottom of the left sidebar). Your app should be under Developer, install it.
-3. Test it by going to your [Hootsuite dashboard](https://hootsuite.com/dashboard), clicking the elipsis on any post and hitting Send to <your-plugin-component-name>. This should pop up a modal with some info about the post you sent to the app.
+2. Edit the plugin component and enter the following into the fields: For the plugin component Service URL use your endpoint for plugin.html, if you used Heroku and Node this would be `https://<heroku-app-name-here>.herokuapp.com/plugin` . Also, check off the Default Install box. 
+3. If you'd like to install a stream example as well you should create another component, but this time make it a stream. Edit it again and this time enter `https://<heroku-app-name-here>.herokuapp.com/stream` as your Service URL.
+4. Install your app by going to your [Hootsuite dashboard](https://hootsuite.com/dashboard) and navigating to the app directory (puzzle piece at the bottom of the left sidebar). Your app should be under Developer, install it.
+5. Test it by going to your [Hootsuite dashboard](https://hootsuite.com/dashboard), clicking the elipsis on any post and hitting Send to <your-plugin-component-name>. This should pop up a modal with some info about the post you sent to the app.
 
 ### Configuring your shared secret (for use with attachFileToMessage())
+
 1. Edit your app in [My Apps](https://hootsuite.com/developers/my-apps)
 2. Under "Authentication Type" select "Single Sign-On (SHA-512)"
 3. Create a shared secret (preferably by randomly generating it) and enter it into the "Shared Secret" field and hit save at the bottom of the page.
@@ -62,6 +63,7 @@ The Sample App can be hosted locally, or on Heroku or some other hosting service
 5. Paste the Shared Secret into this file (no special format, this file should contain your secret and nothing else) and you should be good to go!
 
 ### Configuring your Google client ID
+
 1. Access the [Google Cloud Console](https://console.cloud.google.com/) and create a project.
 2. Go to `APIs and Service -> Credentials` and hit create credentials and create a client ID for a web app. Setup your Authorized Javascript origins with your Heroku domain.
 3. Copy your OAuth 2 Client ID and paste it into `modal.html` and `stream.html` where it says `YOUR-CLIENT-ID-HERE`.
