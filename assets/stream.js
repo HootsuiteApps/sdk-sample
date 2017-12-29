@@ -84,7 +84,16 @@ function bindApiButtons() {
 
   getSingleElementByClassName('hs_getTwitterAccounts').addEventListener('click', function () {
     hsp.getTwitterAccounts(function (data) {
-      replaceTextInClass('hs_getTwitterAccountsOutput', data[0]);
+      var httpRequest = new XMLHttpRequest();
+      httpRequest.open(
+        'GET',
+        window.location.origin + '/twitterAccounts?accountIds=' + data.join()
+      );
+      httpRequest.setRequestHeader('secretKey', 'super_secret')
+      httpRequest.send();
+      httpRequest.onreadystatechange = function() {
+        replaceTextInClass('hs_getTwitterAccountsOutput', httpRequest.responseText);
+      }
     });
   });
 

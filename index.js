@@ -4,9 +4,19 @@ const https = require('https');
 const http = require('http');
 const fs = require('fs');
 const sha512 = require('js-sha512');
+var Twitter = require('twit');
+
 const app = express();
 
 var secret = '';
+
+// client for hydrating twitter data - ADD YOUR OWN CREDENTIALS
+var twitterClient = new Twitter({
+  consumer_key: '',
+  consumer_secret: '',
+  access_token: '',
+  access_token_secret: ''
+});
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -62,6 +72,53 @@ app.post('/plugin', (req, res) => {
 
 app.get('/modal', (req, res) => {
   res.sendFile(__dirname + '/modal.html');
+});
+
+// GET /twitterAccounts?account_ids=<comma,separated,ids>
+app.get('/twitterAccounts', (req, res) => {
+  // there is, of course, better ways to do this
+  if (req.header('secretKey') == 'super_secret') {
+    var accountIds = req.query.accountIds;
+    if (!accountIds) {
+      res.sendStatus(400);
+      return;
+    } else {
+      twitterClient.get('users/lookup', { user_id: accountIds })
+        .catch(function(err) {
+          console.log('caught error', err.stack);
+        })
+        .then(function (result) {
+          var accountNames = result.data.map(function(account) {
+            return account.name
+          });
+          res.send(accountNames);
+          return;
+        });
+    }
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+// GET /tweets/<id>
+app.get('/tweets/:tweetId', (req, res) => {
+  if (req.header('secretKey') == 'super_secret') {
+    if (!req.params.tweetId) {
+      res.sendStatus(400);
+      return;
+    } else {
+      twitterClient.get('statuses/show', { id: req.params.tweetId })
+        .catch(function(err) {
+          console.log('caught error', err.stack);
+        })
+        .then(function (result) {
+          res.send(result.data);
+          return;
+        });
+    }
+  } else {
+    res.sendStatus(401);
+  }
 });
 
 // All Hoosuite apps require HTTPS, so in order to host locally
