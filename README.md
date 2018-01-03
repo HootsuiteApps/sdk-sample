@@ -26,7 +26,7 @@ The Hootsuite dashboard is a tool which allows you to manage all of your social 
 
 ### What does a Hootsuite app do?
 
-A Hootsuite app uses the [Hootsuite JavaScript SDK](https://app-directory.s3.amazonaws.com/docs/sdk/v4/index.html) in order to extend the Hootsuite dashboard by adding custom integrations with other service and useful features for users. Hootsuite apps can either be free or monetized.
+A Hootsuite app uses the [Hootsuite JavaScript SDK](https://app-directory.s3.amazonaws.com/docs/sdk/v4.0/index.html) in order to extend the Hootsuite dashboard by adding custom integrations with other service and useful features for users. Hootsuite apps can either be free or monetized.
 
 ### What does this Hootsuite app do?
 
@@ -80,10 +80,10 @@ You can host your app on any service, but here are few things to keep in mind:
 ## Other things you can do with the Plugin SDK
 
 * Use it to send a post to your own servers and manipulate/save it.
-* Process the images from a post and use the [attachFileToMessage](https://app-directory.s3.amazonaws.com/docs/sdk/v4/global.html#attachMedia) SDK function to put the processed images into the compose box.
-* Compose messages using the [composeMessage](https://app-directory.s3.amazonaws.com/docs/sdk/v4/global.html#composeMessage) SDK function based on the contents of a message that was sent to your plugin.
+* Process the images from a post and use the [attachFileToMessage](https://app-directory.s3.amazonaws.com/docs/sdk/v4.0/global.html#attachMedia) SDK function to put the processed images into the compose box.
+* Compose messages using the [composeMessage](https://app-directory.s3.amazonaws.com/docs/sdk/v4.0/global.html#composeMessage) SDK function based on the contents of a message that was sent to your plugin.
 
 ## Useful Links
 
-* [App Directory SDK Reference](https://app-directory.s3.amazonaws.com/docs/sdk/v4/index.html)
+* [App Directory SDK Reference](https://app-directory.s3.amazonaws.com/docs/sdk/v4.0/index.html)
 * [Hootsuite Developer Docs](https://developer.hootsuite.com/docs)

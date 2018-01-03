@@ -10,13 +10,20 @@ const app = express();
 
 var secret = '';
 
-// client for hydrating twitter data - ADD YOUR OWN CREDENTIALS
-var twitterClient = new Twitter({
-  consumer_key: '',
-  consumer_secret: '',
-  access_token: '',
-  access_token_secret: ''
-});
+// Client for hydrating twitter data - ADD YOUR OWN CREDENTIALS
+// Otherwise, app will not show up in plugin list
+
+try {
+  var twitterClient = new Twitter({
+    consumer_key: '',
+    consumer_secret: '',
+    access_token: '',
+    access_token_secret: ''
+  });
+} catch(error) {
+  console.log('No Twitter API credenitals found');
+  process.exit(1);
+}
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -84,16 +91,16 @@ app.get('/twitterAccounts', (req, res) => {
       return;
     } else {
       twitterClient.get('users/lookup', { user_id: accountIds })
-        .catch(function(err) {
-          console.log('caught error', err.stack);
-        })
-        .then(function (result) {
-          var accountNames = result.data.map(function(account) {
-            return account.name
-          });
-          res.send(accountNames);
-          return;
+      .then(function (result) {
+        var accountNames = result.data.map(function(account) {
+          return account.name
         });
+        res.send(accountNames);
+        return;
+      })
+      .catch(function(error) {
+        console.log('Twitter API credenitals required to send from Twitter stream', error.stack);
+      });
     }
   } else {
     res.sendStatus(401);
@@ -108,13 +115,13 @@ app.get('/tweets/:tweetId', (req, res) => {
       return;
     } else {
       twitterClient.get('statuses/show', { id: req.params.tweetId })
-        .catch(function(err) {
-          console.log('caught error', err.stack);
-        })
-        .then(function (result) {
-          res.send(result.data);
-          return;
-        });
+      .then(function (result) {
+        res.send(result.data);
+        return;
+      })
+      .catch(function(error) {
+        console.log('Twitter API credenitals required to send from Twitter stream', error.stack);
+      });
     }
   } else {
     res.sendStatus(401);
