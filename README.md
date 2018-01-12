@@ -41,6 +41,7 @@ The Sample App can be hosted locally, or on Heroku or some other hosting service
 1. [Setup Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up).
 2. Clone this repository. `git clone https://github.com/HootsuiteApps/sdk-sample.git`
 3. [Create a Heroku app](https://devcenter.heroku.com/articles/getting-started-with-nodejs#deploy-the-app) for this sample app.
+	- Add Twitter Credentials in index.js to use Twitter account (optional)
 4. `git push heroku master` to push this app to Heroku. Heroku should detect that this app is a Node/Express app and run your index.js file
 5. Once Heroku says that it's done use `heroku open` and add /modal to the URL it opened in your browser. If it comes up with a blank page that has a "Show JSON Payload" button then the web server is setup correctly.
 
