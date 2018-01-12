@@ -70,8 +70,6 @@ app.get('/gen-token', (req, res) => {
   }
 });
 
-
-
 app.post('/stream', (req, res) => {
 	res.sendFile(__dirname + '/stream.html');
 });
