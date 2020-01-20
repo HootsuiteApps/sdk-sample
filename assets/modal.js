@@ -12,30 +12,34 @@ function populateMessage(data) {
   appendTextToClass('hs_jsonDump', prettyJSONData);
 
   // finds network-specific information
-  var avatarURL = 'https://hootsuite.com/dist/images/logos/hootsuite/owly.png';
-  var displayName = 'Hootsuite';
+  var avatarURL = 'http://static.hootsuite.com/v2/images/dashboard/avatars/member-default-100.d3442c37.svg';
+  var displayName = 'Unknown';
   var profileURL = 'https://hootsuite.com/';
-  switch (data.post.network) {
-    case 'FACEBOOK':
-      avatarURL = data.profile.picture;
-      displayName = data.profile.name;
-      profileURL = data.profile.link;
-      break;
-    case 'TWITTER':
-      avatarURL = data.profile.profile_image_url_https;
-      displayName = data.profile.name;
-      profileURL = data.profile.url;
-      break;
-    case 'INSTAGRAM':
-      avatarURL = data.profile.profile_picture;
-      displayName = data.profile.full_name;
-      profileURL = 'https://instagram.com/' + data.post.user.username;
-      break;
-    case 'YOUTUBE':
-      avatarURL = data.profile.avatar_url;
-      displayName = data.profile.name;
-      profileURL = 'https://www.youtube.com/channel/' + data.profile.userid;
-      break;
+  if (typeof data.profile === "undefined") {
+    // skip if profile is empty
+  } else {
+    switch (data.post.network) {
+      case 'FACEBOOK':
+        avatarURL = data.profile.picture;
+        displayName = data.profile.name;
+        profileURL = data.profile.link;
+        break;
+      case 'TWITTER':
+        avatarURL = data.profile.profile_image_url_https;
+        displayName = data.profile.name;
+        profileURL = data.profile.url;
+        break;
+      case 'INSTAGRAM':
+        avatarURL = data.profile.profile_picture;
+        displayName = data.profile.full_name;
+        profileURL = 'https://instagram.com/' + data.post.user.username;
+        break;
+      case 'YOUTUBE':
+        avatarURL = data.profile.avatar_url;
+        displayName = data.profile.name;
+        profileURL = 'https://www.youtube.com/channel/' + data.profile.userid;
+        break;
+    }
   }
 
   // displays user's display name and attaches url to username
